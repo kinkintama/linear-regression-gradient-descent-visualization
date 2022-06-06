@@ -12,7 +12,7 @@ def generate_random_points(n):
     return x, y
 
 
-def plot_gradient_descent(ys, xs, ms, cs, losses):
+def plot_gradient_descent(ys, xs, ms, cs, losses, m_range=(0, 1), c_range=(-2, 2)):
     """
     Plots the gradient descent.
     :param ys: y values
@@ -20,12 +20,14 @@ def plot_gradient_descent(ys, xs, ms, cs, losses):
     :param ms: slopes of the regression line
     :param cs: intercepts of the regression line
     :param losses: mean squared errors
+    :param m_range: range of m for the plot
+    :param c_range: range of c for the plot
     :return: None
     """
 
     random_length = 30
-    r_ms = np.outer(np.linspace(0, 1, random_length), np.ones(random_length))
-    r_cs =  np.outer(np.linspace(-2, 2, random_length), np.ones(random_length)).T
+    r_ms = np.outer(np.linspace(*m_range, random_length), np.ones(random_length))
+    r_cs =  np.outer(np.linspace(*c_range, random_length), np.ones(random_length)).T
     r_losses = np.zeros(r_ms.shape)
 
     for i in range(random_length):
@@ -138,7 +140,7 @@ def main():
 
     print(f'Final m: {m}, Final c: {c}, Final loss: {losses[-1]}')
     plot_regression_line(xs, ys, m, c)
-    plot_gradient_descent(ys, xs, ms, cs, losses)
+    plot_gradient_descent(ys, xs, ms, cs, losses, m_range=(0, 1), c_range=(-2, 2))
     plt.show()
 
 if __name__ == "__main__":
