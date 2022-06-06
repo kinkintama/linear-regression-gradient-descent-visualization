@@ -125,23 +125,34 @@ def perform_gradient_descent(xs, ys, learning_rate=0.0001, iterations=100):
 
     return ms, cs, losses
 
-def main():
+def main(xs, ys, learning_rate=0.0001, iterations=100):
+    """
+    Main function.
+    :param xs: x values
+    :param ys: y values
+    :param learning_rate: learning rate
+    :param iterations: number of iterations
+    :return: None
+    """
+
+    ms, cs, losses = perform_gradient_descent(xs, ys, learning_rate=learning_rate, iterations=iterations)
+    m, c, loss = ms[-1], cs[-1], losses[-1]
+
+    plot_regression_line(xs, ys, m, c)
+    plot_gradient_descent(ys, xs, ms, cs, losses, m_range=(0, 1), c_range=(-2, 2))
+
+    print(f'Final m: {m}, Final c: {c}, Final loss: {losses[-1]}')
+    plt.show()
+
+if __name__ == "__main__":
     ##Linear Data
-    xs = np.arange(100)
-    delta = np.random.uniform(-10, 10, size=(100,))
+    data_length = 100
+    xs = np.arange(data_length)
+    delta = np.random.uniform(-10, 10, size=(data_length,))
     ys = 0.9 * xs + 1 + delta
 
     ##Random Data
     # xs = np.random.randint(0, 10, size=(100,))
     # ys = np.random.randint(0, 10, size=(100,))
 
-    ms, cs, losses = perform_gradient_descent(xs, ys, learning_rate=0.0001, iterations=1000)
-    m, c, loss = ms[-1], cs[-1], losses[-1]
-
-    print(f'Final m: {m}, Final c: {c}, Final loss: {losses[-1]}')
-    plot_regression_line(xs, ys, m, c)
-    plot_gradient_descent(ys, xs, ms, cs, losses, m_range=(0, 1), c_range=(-2, 2))
-    plt.show()
-
-if __name__ == "__main__":
-    main()
+    main(xs, ys, learning_rate=0.0001, iterations=10000)
